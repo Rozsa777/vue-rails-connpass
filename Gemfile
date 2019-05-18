@@ -66,3 +66,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'foreman'
 gem 'httpclient'
+gem 'jquery-rails'
+gem 'materialize-sass'
+gem 'material_icons'
