@@ -18,7 +18,7 @@
     <dl class="conditoin">
       <dt class="conditoin-name">キーワード</dt>
       <dd class="conditoin-item">
-        <input type="text" placeholder="キーワード">
+        <input v-model.trim="keyword" type="text" placeholder="キーワード">
       </dd>
     </dl>
     <button @click="searchEvent">検索</button>
@@ -34,6 +34,7 @@ export default {
   data: function() {
     return {
       events: [],
+      keyword: '',
     }
   },
   components: {
@@ -42,8 +43,8 @@ export default {
   methods: {
     searchEvent: function() {
       this.reset()
-      const uri = '/api/connpass/event?keyword=rails'
-      axios.get(uri).then((res) => {
+      const uri = '/api/connpass/event'
+      axios.get(uri, {params: this.createQueryParam()}).then((res) => {
         for(let event of res.data.events) {
           this.events.push(event)
         }
@@ -54,6 +55,13 @@ export default {
     },
     reset: function() {
       this.events = []
+    },
+    createQueryParam: function() {
+      let params = {}
+      if(this.keyword) {
+        params.keyword = this.keyword
+      }
+      return params
     }
   }
 }
