@@ -41,7 +41,8 @@ export default {
   },
   methods: {
     searchEvent: function() {
-      const uri = '/api/connpass/event'
+      this.reset()
+      const uri = '/api/connpass/event?keyword=rails'
       axios.get(uri).then((res) => {
         for(let event of res.data.events) {
           this.events.push(event)
@@ -51,6 +52,9 @@ export default {
         console.log(error)
       })
     },
+    reset: function() {
+      this.events = []
+    }
   }
 }
 </script>
