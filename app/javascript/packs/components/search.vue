@@ -3,22 +3,20 @@
     <dl class="conditoin">
       <dt class="conditoin-name">都道府県</dt>
       <dd class="conditoin-item">
-        <input type="text" placeholder="都道府県">
+        <input type="text">
       </dd>
     </dl>
     <dl class="conditoin">
       <dt class="conditoin-name">開催日</dt>
       <dd class="conditoin-item">
-        <input type="text" placeholder="From">
-      </dd>
-      <dd class="conditoin-item">
-        <input type="text" placeholder="To">
+        <datepicker v-model="params.from" placeholder="From" format="yyyy-MM-dd"></datepicker>
+        <datepicker v-model="params.to" placeholder="To" format="yyyy-MM-dd"></datepicker>
       </dd>
     </dl>
     <dl class="conditoin">
       <dt class="conditoin-name">キーワード</dt>
       <dd class="conditoin-item">
-        <input v-model.trim="keyword" type="text" placeholder="キーワード">
+        <input v-model.trim="params.keyword" type="text">
       </dd>
     </dl>
     <button @click="searchEvent">検索</button>
@@ -28,17 +26,23 @@
 
 <script>
 import List from './list.vue'
+import Datepicker from 'vuejs-datepicker';
 import axios from 'axios';
 
 export default {
   data: function() {
     return {
       events: [],
-      keyword: '',
+      params: {
+        from: '',
+        to: '',
+        keyword: '',
+      }
     }
   },
   components: {
     List,
+    Datepicker,
   },
   methods: {
     searchEvent: function() {
@@ -58,12 +62,21 @@ export default {
     },
     createQueryParam: function() {
       let params = {}
-      if(this.keyword) {
-        params.keyword = this.keyword
+      if(this.params.keyword) {
+        params.keyword = this.params.keyword
       }
-      return params
+      return this.params
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+#search-conditoin-container {
+  .conditoin {
+    .conditoin-item {
+      display: flex;
+    }
+  }
+}
+</style>
